@@ -1,0 +1,11 @@
+# Ignorer les dépendances
+node_modules/
+
+# Ignorer le fichier d'environnement du backend
+jobi-backend/.env
+
+# Ignorer les fichiers temporaires
+.DS_Store
+.env.local
+.env.development
+.env.production
