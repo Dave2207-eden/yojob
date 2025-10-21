@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin - Jobi</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .header h1 {
+        color: #ff6b35;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        color: #666;
+        font-size: 1.2em;
+      }
+
+      .login-section {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .login-form input {
+        width: 100%;
+        max-width: 300px;
+        padding: 15px;
+        margin: 10px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 1.1em;
+      }
+
+      .login-btn {
+        background: linear-gradient(45deg, #ff6b35, #f7931e);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 10px;
+        font-size: 1.2em;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: transform 0.3s ease;
+      }
+
+      .login-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .dashboard {
+        display: none;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-number {
+        font-size: 3em;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .stat-card:nth-child(1) .stat-number {
+        color: #ff6b35;
+      }
+      .stat-card:nth-child(2) .stat-number {
+        color: #4ecdc4;
+      }
+      .stat-card:nth-child(3) .stat-number {
+        color: #45b7d1;
+      }
+      .stat-card:nth-child(4) .stat-number {
+        color: #f7931e;
+      }
+
+      .stat-label {
+        font-size: 1.2em;
+        color: #666;
+      }
+
+      .actions {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .action-btn {
+        background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 10px;
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 0 10px;
+        transition: transform 0.3s ease;
+      }
+
+      .action-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .data-table {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background: linear-gradient(45deg, #ff6b35, #f7931e);
+        color: white;
+        font-weight: bold;
+      }
+
+      tr:hover {
+        background: rgba(255, 107, 53, 0.1);
+      }
+
+      .badge {
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        font-weight: bold;
+      }
+
+      .badge-travailleur {
+        background: #4ecdc4;
+        color: white;
+      }
+      .badge-employeur {
+        background: #ff6b35;
+        color: white;
+      }
+      .badge-les-deux {
+        background: #f7931e;
+        color: white;
+      }
+
+      .loading {
+        text-align: center;
+        font-size: 1.2em;
+        color: #666;
+        margin: 20px 0;
+      }
+
+      .error {
+        background: #ff4757;
+        color: white;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 20px 0;
+        text-align: center;
+      }
+
+      .logout-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ff4757;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+        .header h1 {
+          font-size: 2em;
+        }
+        .stat-number {
+          font-size: 2em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Login Section -->
+      <div id="loginSection" class="login-section">
+        <div class="header">
+          <h1>🚀 Admin Jobi</h1>
+          <p>Tableau de bord administrateur</p>
+        </div>
+        <form id="loginForm">
+          <div>
+            <input
+              type="password"
+              id="password"
+              placeholder="🔐 Mot de passe admin"
+              required
+            />
+          </div>
+          <button type="submit" class="login-btn">
+            🔓 Accéder au dashboard
+          </button>
+        </form>
+        <div id="loginError" class="error" style="display: none"></div>
+      </div>
+
+      <!-- Dashboard Section -->
+      <div id="dashboard" class="dashboard">
+        <button class="logout-btn" onclick="logout()">🚪 Déconnexion</button>
+
+        <div class="header">
+          <h1>📊 Dashboard Jobi</h1>
+          <p>Suivi des inscriptions en temps réel</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="totalUsers">-</div>
+            <div class="stat-label">👥 Total Inscrits</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="totalWorkers">-</div>
+            <div class="stat-label">🔍 Chercheurs</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="totalEmployers">-</div>
+            <div class="stat-label">🏢 Employeurs</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="todaySignups">-</div>
+            <div class="stat-label">📅 Aujourd'hui</div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+          <h3>⚡ Actions Rapides</h3>
+          <button class="action-btn" onclick="refreshData()">
+            🔄 Actualiser
+          </button>
+          <button class="action-btn" onclick="exportCSV()">
+            📊 Exporter CSV
+          </button>
+          <button class="action-btn" onclick="sendBulkEmail()">
+            📧 Email groupé
+          </button>
+        </div>
+
+        <!-- Data Table -->
+        <div class="data-table">
+          <h3>📋 Liste des Inscrits</h3>
+          <div id="loading" class="loading" style="display: none">
+            ⏳ Chargement des données...
+          </div>
+          <div id="error" class="error" style="display: none"></div>
+          <table id="usersTable">
+            <thead>
+              <tr>
+                <th>📛 Nom</th>
+                <th>📱 Téléphone</th>
+                <th>✉️ Email</th>
+                <th>🎯 Type</th>
+                <th>🏠 Quartier</th>
+                <th>📅 Inscription</th>
+                <th>⚡ Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const ADMIN_PASSWORD = "jobi2025"; // Change ce mot de passe !
+      let users = [];
+
+      // Login
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const password = document.getElementById("password").value;
+
+          if (password === ADMIN_PASSWORD) {
+            document.getElementById("loginSection").style.display = "none";
+            document.getElementById("dashboard").style.display = "block";
+            loadDashboardData();
+          } else {
+            const errorDiv = document.getElementById("loginError");
+            errorDiv.textContent = "❌ Mot de passe incorrect !";
+            errorDiv.style.display = "block";
+          }
+        });
+
+      // Logout
+      function logout() {
+        document.getElementById("loginSection").style.display = "block";
+        document.getElementById("dashboard").style.display = "none";
+        document.getElementById("password").value = "";
+        document.getElementById("loginError").style.display = "none";
+      }
+
+      // Load data from backend
+      async function loadDashboardData() {
+        const loading = document.getElementById("loading");
+        const errorDiv = document.getElementById("error");
+
+        loading.style.display = "block";
+        errorDiv.style.display = "none";
+
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/admin/users",
+            {
+              headers: {
+                Authorization: `Bearer ${ADMIN_PASSWORD}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Erreur de chargement des données");
+          }
+
+          users = await response.json();
+          updateStats();
+          updateTable();
+        } catch (error) {
+          errorDiv.textContent = `❌ Erreur: ${error.message}`;
+          errorDiv.style.display = "block";
+          console.error("Erreur:", error);
+        } finally {
+          loading.style.display = "none";
+        }
+      }
+
+      // Update statistics
+      function updateStats() {
+        const totalUsers = users.length;
+        const workers = users.filter(
+          (u) => u.type === "travailleur" || u.type === "les-deux"
+        ).length;
+        const employers = users.filter(
+          (u) => u.type === "employeur" || u.type === "les-deux"
+        ).length;
+        const today = new Date().toDateString();
+        const todaySignups = users.filter(
+          (u) => new Date(u.dateInscription).toDateString() === today
+        ).length;
+
+        document.getElementById("totalUsers").textContent = totalUsers;
+        document.getElementById("totalWorkers").textContent = workers;
+        document.getElementById("totalEmployers").textContent = employers;
+        document.getElementById("todaySignups").textContent = todaySignups;
+      }
+
+      // Update table
+      function updateTable() {
+        const tbody = document.getElementById("usersTableBody");
+        tbody.innerHTML = "";
+
+        users.forEach((user) => {
+          const row = document.createElement("tr");
+          if (user.dateInscription) {
+            try {
+              date = new Date(user.dateInscription).toLocaleDateString("fr-FR");
+            } catch (e) {
+              date = "Format invalide";
+            }
+          }
+
+          let typeBadge = "";
+          if (user.type === "travailleur")
+            typeBadge =
+              '<span class="badge badge-travailleur">🔍 Travailleur</span>';
+          else if (user.type === "employeur")
+            typeBadge =
+              '<span class="badge badge-employeur">🏢 Employeur</span>';
+          else if (user.type === "les-deux")
+            typeBadge = '<span class="badge badge-les-deux">⚡ Les deux</span>';
+
+          row.innerHTML = `
+                    <td><strong>${user.name}</strong></td>
+                    <td>${user.phone}</td>
+                    <td>${user.email || "-"}</td>
+                    <td>${typeBadge}</td>
+                    <td>${user.quartier || "-"}</td>
+                    <td>${date}</td>
+                    <td><button onclick="deleteUser('${
+                      user._id
+                    }')" style="background:#ff4757;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;">🗑️ Supprimer</button></td>
+                `;
+          tbody.appendChild(row);
+        });
+      }
+
+      // Refresh data
+      function refreshData() {
+        loadDashboardData();
+      }
+
+      // Export to CSV
+      function exportCSV() {
+        let csvContent =
+          "Nom,Téléphone,Email,Type,Quartier,Date d'inscription\n";
+
+        users.forEach((user) => {
+          if (user.dateInscription) {
+            try {
+              date = new Date(user.dateInscription).toLocaleDateString("fr-FR");
+            } catch (e) {
+              date = "Format invalide";
+            }
+          }
+          csvContent += `"${user.name}","${user.phone}","${
+            user.email || ""
+          }","${user.type}","${user.quartier || ""}","${date}"\n`;
+        });
+
+        const blob = new Blob([csvContent], { type: "text/csv" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `jobi-inscrits-${
+          new Date().toISOString().split("T")[0]
+        }.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }
+
+      // Send bulk email
+      async function sendBulkEmail() {
+        if (
+          confirm(
+            "Êtes-vous sûr de vouloir envoyer un email à tous les inscrits ?"
+          )
+        ) {
+          try {
+            const response = await fetch(
+              "http://localhost:3000/api/admin/send-bulk-email",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${ADMIN_PASSWORD}`,
+                },
+              }
+            );
+
+            const result = await response.json();
+            if (result.success) {
+              alert("✅ Emails envoyés avec succès !");
+            } else {
+              alert("❌ Erreur lors de l'envoi des emails");
+            }
+          } catch (error) {
+            alert("❌ Erreur: " + error.message);
+          }
+        }
+      }
+
+      function deleteUser(userId) {
+        if (confirm("Tu es sûr de supprimer cet utilisateur ?")) {
+          fetch(`http://localhost:3000/api/admin/users/${userId}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer jobi2025` },
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              if (result.success) {
+                alert("✅ Supprimé !");
+                loadDashboardData(); // Actualise la page
+              }
+            });
+        }
+      }
+    </script>
+  </body>
+</html>

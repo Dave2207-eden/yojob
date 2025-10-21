@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jobi - Le Job qui vient à toi</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="container">
+        <div class="logo"><span class="j">Y</span>OJOB</div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Floating Emojis -->
+      <div class="floating-emoji emoji-1">💼</div>
+      <div class="floating-emoji emoji-2">🚀</div>
+      <div class="floating-emoji emoji-3">💰</div>
+      <div class="floating-emoji emoji-4">🎯</div>
+
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1>YOJOB</h1>
+          <p class="slogan">Le Job qui vient à toi</p>
+          <p class="subtitle">
+            🔥 BIENTÔT À OUAGADOUGOU ! 🔥<br />
+            L'app révolutionnaire qui connecte les jeunes burkinabè aux
+            opportunités de travail ! Inscris-toi maintenant pour être parmi les
+            premiers utilisateurs !
+          </p>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta-section">
+        <div class="container">
+          <h2>🚀 Rejoins la révolution ! 🚀</h2>
+          <p>
+            Inscris-toi maintenant et reçois une notification dès que YOJOB sera
+            disponible dans ton quartier. Les premiers inscrits auront des bonus
+            exclusifs ! 🎁
+          </p>
+
+          <form class="signup-form" id="signupForm">
+            <div class="form-group">
+              <label for="name">🏷️ Nom complet *</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Ex: Moussa Ouédraogo"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">📱 Numéro de téléphone *</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                placeholder="Ex: 70 12 34 56"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">✉️ Email (optionnel)</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Ex: moussa@example.com"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="type">🎯 Tu es plutôt :</label>
+              <select id="type" name="type" required>
+                <option value="">Choisir...</option>
+                <option value="travailleur">🔍 Chercheur de travail</option>
+                <option value="employeur">🏢 Employeur/Entreprise</option>
+                <option value="les-deux">⚡ Les deux</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="quartier">📍 Quartier/Secteur</label>
+              <input
+                type="text"
+                id="quartier"
+                name="quartier"
+                placeholder="Ex: Ouaga 2000, Pissy, Gounghin..."
+              />
+            </div>
+
+            <button type="submit" class="btn-primary">
+              🎉 M'inscrire maintenant ! 🎉
+              <span class="loading" id="loading"></span>
+            </button>
+
+            <div class="success-message" id="successMessage">
+              ✅ WAOUH ! Inscription réussie ! Tu recevras une notification dès
+              que YOJOB sera disponible. Prépare-toi à gagner de l'argent ! 💰
+              Vérifier votre mail 👍
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="features">
+        <div class="container">
+          <h2>🔥 Pourquoi YOJOB va exploser ? 🔥</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">⚡</div>
+              <h3>Ultra Rapide</h3>
+              <p>
+                Trouve un job en moins de 2h ou trouve un travailleur en 30
+                minutes ! Fini l'attente, c'est parti pour l'action ! 🚀
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🔒</div>
+              <h3>Sécurité Totale</h3>
+              <p>
+                Paiement 100% garanti via Orange Money/Moov/Telecel ! Zéro
+                arnaque, zéro stress. Ton argent est blindé ! 💪
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">📱</div>
+              <h3>Pour Tous</h3>
+              <p>
+                App + WhatsApp + USSD ! Même avec un téléphone simple, tu peux
+                utiliser YOJOB. Personne n'est laissé derrière ! 🙌
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How it Works -->
+      <section class="how-it-works">
+        <div class="container">
+          <h2>💡 Comment ça marche ? 💡</h2>
+          <div class="steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <h3>🎯 Inscription Express</h3>
+              <p>
+                2 minutes chrono : nom, compétences, quartier. Et c'est parti !
+                Tu es dans la course ! 🏃‍♂️
+              </p>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <h3>🔍 Trouve ou Propose</h3>
+              <p>
+                Vois les missions près de chez toi ou poste ton besoin. L'appli
+                fait le match parfait ! 🎯
+              </p>
+            </div>
+
+            <div class="step">
+              <div class="step-number">3</div>
+              <h3>💰 Travaille & Encaisse</h3>
+              <p>
+                Fais le job, valide et reçois ton paiement direct sur ton
+                téléphone ! Money, money ! 🤑
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 YOJOB. Bientôt disponible au Burkina Faso.</p>
+        <p>🚀 Une révolution burkinabè dans le monde du travail ! 🇧🇫</p>
+      </div>
+    </footer>
+
+    <script>
+      function createConfetti() {
+        const colors = ["#FF6B35", "#F7931E", "#4ECDC4", "#45B7D1", "#FFD700"];
+        const emojis = ["🎉", "🎊", "💰", "🚀", "⚡", "🔥"];
+
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            const confetti = document.createElement("div");
+            const isEmoji = Math.random() > 0.7;
+
+            if (isEmoji) {
+              confetti.textContent =
+                emojis[Math.floor(Math.random() * emojis.length)];
+              confetti.style.fontSize = "20px";
+            } else {
+              confetti.style.width = "10px";
+              confetti.style.height = "10px";
+              confetti.style.backgroundColor =
+                colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            confetti.style.position = "fixed";
+            confetti.style.left = Math.random() * 100 + "vw";
+            confetti.style.top = "-10px";
+            confetti.style.pointerEvents = "none";
+            confetti.style.zIndex = "9999";
+            confetti.style.animation = `confettiFall ${
+              2 + Math.random() * 3
+            }s linear forwards`;
+
+            document.body.appendChild(confetti);
+
+            setTimeout(() => {
+              confetti.remove();
+            }, 5000);
+          }, i * 50);
+        }
+      }
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const loading = document.getElementById("loading");
+          const successMessage = document.getElementById("successMessage");
+          const submitButton = e.target.querySelector('button[type="submit"]');
+
+          loading.style.display = "inline-block";
+          submitButton.disabled = true;
+          submitButton.textContent = "Inscription en cours...";
+
+          const formData = new FormData(e.target);
+          const data = Object.fromEntries(formData);
+
+          try {
+            const response = await fetch(
+              "http://localhost:3000/api/inscription",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              }
+            );
+
+            const result = await response.json();
+
+            if (result.success) {
+              successMessage.style.display = "block";
+              successMessage.innerHTML = "✅ " + result.message;
+              createConfetti();
+              e.target.reset();
+            } else {
+              throw new Error(result.message);
+            }
+          } catch (error) {
+            alert("Erreur: " + error.message);
+          } finally {
+            loading.style.display = "none";
+            submitButton.disabled = false;
+            submitButton.innerHTML = "M'inscrire maintenant !";
+          }
+        });
+    </script>
+  </body>
+</html>
