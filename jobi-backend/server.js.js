@@ -11,7 +11,7 @@ const app = express();
 // ✅ Configuration CORS - pour autoriser ton frontend à accéder à l'API
 app.use(
   cors({
-    origin: "https://jobi-sepia.vercel.app/", // autorise tout le monde (à sécuriser plus tard)
+    origin: "https://jobi-sepia.vercel.app", // autorise tout le monde (à sécuriser plus tard)
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
