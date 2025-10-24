@@ -9,7 +9,7 @@
   <body>
     <header>
       <nav class="container">
-        <div class="logo"><span class="j">Y</span>OJOB</div>
+        <div class="logo"><span class="j">J</span>OBI</div>
       </nav>
     </header>
 
@@ -23,7 +23,7 @@
       <!-- Hero Section -->
       <section class="hero">
         <div class="hero-content">
-          <h1>YOJOB</h1>
+          <h1>JOBI</h1>
           <p class="slogan">Le Job qui vient à toi</p>
           <p class="subtitle">
             🔥 BIENTÔT À OUAGADOUGOU ! 🔥<br />
@@ -39,7 +39,7 @@
         <div class="container">
           <h2>🚀 Rejoins la révolution ! 🚀</h2>
           <p>
-            Inscris-toi maintenant et reçois une notification dès que YOJOB sera
+            Inscris-toi maintenant et reçois une notification dès que JOBI sera
             disponible dans ton quartier. Les premiers inscrits auront des bonus
             exclusifs ! 🎁
           </p>
@@ -104,7 +104,7 @@
 
             <div class="success-message" id="successMessage">
               ✅ WAOUH ! Inscription réussie ! Tu recevras une notification dès
-              que YOJOB sera disponible. Prépare-toi à gagner de l'argent ! 💰
+              que JOBI sera disponible. Prépare-toi à gagner de l'argent ! 💰
               Vérifier votre mail 👍
             </div>
           </form>
@@ -114,7 +114,7 @@
       <!-- Features Section -->
       <section class="features">
         <div class="container">
-          <h2>🔥 Pourquoi YOJOB va exploser ? 🔥</h2>
+          <h2>🔥 Pourquoi JOBI va exploser ? 🔥</h2>
           <div class="features-grid">
             <div class="feature-card">
               <div class="feature-icon">⚡</div>
@@ -139,7 +139,7 @@
               <h3>Pour Tous</h3>
               <p>
                 App + WhatsApp + USSD ! Même avec un téléphone simple, tu peux
-                utiliser YOJOB. Personne n'est laissé derrière ! 🙌
+                utiliser JOBI. Personne n'est laissé derrière ! 🙌
               </p>
             </div>
           </div>
@@ -184,12 +184,15 @@
 
     <footer>
       <div class="container">
-        <p>&copy; 2025 YOJOB. Bientôt disponible au Burkina Faso.</p>
+        <p>&copy; 2025 JOBI. Bientôt disponible au Burkina Faso.</p>
         <p>🚀 Une révolution burkinabè dans le monde du travail ! 🇧🇫</p>
       </div>
     </footer>
 
     <script>
+      // URL de ton backend Render
+      const API_URL = "https://jobi-1wtu.onrender.com";
+
       function createConfetti() {
         const colors = ["#FF6B35", "#F7931E", "#4ECDC4", "#45B7D1", "#FFD700"];
         const emojis = ["🎉", "🎊", "💰", "🚀", "⚡", "🔥"];
@@ -244,16 +247,13 @@
           const data = Object.fromEntries(formData);
 
           try {
-            const response = await fetch(
-              "http://localhost:3000/api/inscription",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-              }
-            );
+            const response = await fetch(`${API_URL}/api/inscription`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            });
 
             const result = await response.json();
 

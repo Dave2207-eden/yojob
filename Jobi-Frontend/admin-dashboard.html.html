@@ -385,7 +385,7 @@
 
         try {
           const response = await fetch(
-            "http://localhost:3000/api/admin/users",
+            "https://jobi-1wtu.onrender.com/api/admin/users",
             {
               headers: {
                 Authorization: `Bearer ${ADMIN_PASSWORD}`,
@@ -514,7 +514,7 @@
         ) {
           try {
             const response = await fetch(
-              "http://localhost:3000/api/admin/send-bulk-email",
+              "https://jobi-1wtu.onrender.com/api/admin/send-bulk-email",
               {
                 method: "POST",
                 headers: {
@@ -538,7 +538,7 @@
 
       function deleteUser(userId) {
         if (confirm("Tu es sûr de supprimer cet utilisateur ?")) {
-          fetch(`http://localhost:3000/api/admin/users/${userId}`, {
+          fetch(`https://jobi-1wtu.onrender.com/api/admin/users/${userId}`, {
             method: "DELETE",
             headers: { Authorization: `Bearer jobi2025` },
           })

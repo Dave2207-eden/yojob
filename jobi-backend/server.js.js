@@ -8,6 +8,18 @@ require("dotenv").config();
 const SibApiV3Sdk = require("sib-api-v3-sdk");
 
 const app = express();
+// ✅ Configuration CORS - pour autoriser ton frontend à accéder à l'API
+app.use(
+  cors({
+    origin: "https://jobi-sepia.vercel.app/", // autorise tout le monde (à sécuriser plus tard)
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// Pour traiter les requêtes JSON
+// app.use(express.json());
+
 const PORT = process.env.PORT || 3000;
 
 // Middleware
@@ -318,8 +330,6 @@ app.post("/api/notify-launch", async (req, res) => {
     });
   }
 });
-
-// Ajoute ces routes dans ton server.js (après tes autres routes)
 
 // Middleware d'authentification admin simple
 function authenticateAdmin(req, res, next) {
