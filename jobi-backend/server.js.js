@@ -34,45 +34,48 @@ apiKey.apiKey = process.env.BREVO_API_KEY;
 const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 // Schéma MongoDB pour les inscriptions JOBI
-const inscriptionSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
+const inscriptionSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      trim: true,
+      lowercase: true,
+    },
+    type: {
+      type: String,
+      required: true,
+      enum: ["travailleur", "employeur", "les-deux"],
+    },
+    quartier: {
+      type: String,
+      trim: true,
+    },
+    dateInscription: {
+      type: Date,
+      default: Date.now,
+    },
+    emailEnvoye: {
+      type: Boolean,
+      default: false,
+    },
+    statut: {
+      type: String,
+      default: "en_attente",
+      enum: ["en_attente", "notifie", "actif"],
+    },
   },
-  phone: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    trim: true,
-    lowercase: true,
-  },
-  type: {
-    type: String,
-    required: true,
-    enum: ["travailleur", "employeur", "les-deux"],
-  },
-  quartier: {
-    type: String,
-    trim: true,
-  },
-  dateInscription: {
-    type: Date,
-    default: Date.now,
-  },
-  emailEnvoye: {
-    type: Boolean,
-    default: false,
-  },
-  statut: {
-    type: String,
-    default: "en_attente",
-    enum: ["en_attente", "notifie", "actif"],
-  },
-});
+  { timestamps: true } // ✅ ajoute cette ligne
+);
 
 const Inscription = mongoose.model("Inscription", inscriptionSchema);
 
@@ -482,7 +485,7 @@ console.log("📊 Routes admin configurées ! Accès: http://localhost:3000/admi
 // route Supprimer un utilisateur
 app.delete("/api/admin/users/:id", authenticateAdmin, async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
+    await Inscription.findByIdAndDelete(req.params.id);
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: "Erreur" });
