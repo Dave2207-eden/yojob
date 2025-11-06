@@ -90,23 +90,42 @@ mongoose
 
 // Fonction pour envoyer l'email de bienvenue
 // Fonction pour envoyer l'email de bienvenue via le template Brevo
+// --- Configuration de Brevo (Sendinblue) ---
+const SibApiV3Sdk = require("sib-api-v3-sdk");
+require("dotenv").config();
+
+// Création d'une instance de l'API Brevo
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+// Configuration de la clé API (authentification)
+let apiKey =
+  apiInstance.authentications["apiKey"] ||
+  apiInstance.authentications["api-key"];
+apiKey.apiKey = process.env.BREVO_API_KEY;
+
+// --- Fonction d'envoi d'email de bienvenue ---
 async function envoyerEmailBienvenue(inscription) {
+  // Texte adapté selon le type de compte
   const typeTexte = {
     travailleur: "chercheur de travail",
     employeur: "employeur",
     "les-deux": "chercheur de travail ET employeur",
   };
 
+  // Corps de l'email basé sur un template Brevo
   const sendSmtpEmail = {
+    sender: {
+      email: process.env.SENDER_EMAIL, // ✅ adresse d'expéditeur vérifiée sur Brevo
+      name: "JOBI - Plateforme de connexion professionnelle",
+    },
     to: [
       {
         email: inscription.email,
         name: inscription.name,
       },
     ],
-    templateId: 4, // ← REMPLACE PAR L'ID DE TON TEMPLATE BREVO
+    templateId: 4, // ⚠️ remplace 4 par l’ID exact de ton template Brevo
     params: {
-      // ← LES PARAMÈTRES POUR REMPLIR LE TEMPLATE
       NAME: inscription.name,
       PHONE: inscription.phone,
       EMAIL: inscription.email || "Non renseigné",
@@ -117,13 +136,15 @@ async function envoyerEmailBienvenue(inscription) {
 
   try {
     const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
-    console.log("✅ Email envoyé via template Brevo à:", inscription.name);
+    console.log("✅ Email envoyé via Brevo à :", inscription.name);
     return true;
   } catch (error) {
-    console.error("❌ Erreur envoi email Brevo:", error);
+    console.error("❌ Erreur envoi email Brevo :", error);
     return false;
   }
 }
+
+module.exports = { envoyerEmailBienvenue };
 
 // Route principale
 app.get("/", (req, res) => {
