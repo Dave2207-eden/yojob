@@ -5,7 +5,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 // Import Brevo (anciennement SendinBlue)
-const SibApiV3Sdk = require("sib-api-v3-sdk");
+// const SibApiV3Sdk = require("sib-api-v3-sdk");
 
 const app = express();
 // ✅ Configuration CORS - pour autoriser ton frontend à accéder à l'API
@@ -28,8 +28,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configuration Brevo
-const defaultClient = SibApiV3Sdk.ApiClient.instance;
-const apiKey = defaultClient.authentications["api-key"];
+// const defaultClient = SibApiV3Sdk.ApiClient.instance;
+// const apiKey = defaultClient.authentications["api-key"];
 apiKey.apiKey = process.env.BREVO_API_KEY;
 const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
@@ -95,7 +95,7 @@ const SibApiV3Sdk = require("sib-api-v3-sdk");
 require("dotenv").config();
 
 // Création d'une instance de l'API Brevo
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+// const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 // Configuration de la clé API (authentification)
 let apiKey =
