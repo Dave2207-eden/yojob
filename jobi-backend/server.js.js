@@ -30,8 +30,55 @@ app.use(express.urlencoded({ extended: true }));
 // Configuration Brevo
 // const defaultClient = SibApiV3Sdk.ApiClient.instance;
 // const apiKey = defaultClient.authentications["api-key"];
-apiKey.apiKey = process.env.BREVO_API_KEY;
+// apiKey.apiKey = process.env.BREVO_API_KEY;
+// const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+// --- Configuration de Brevo (Sendinblue) ---
+const SibApiV3Sdk = require("sib-api-v3-sdk");
+require("dotenv").config();
+
+// Création d'une instance de l'API Brevo
 const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+// Configuration de la clé API (authentification)
+const apiKeyAuth =
+  apiInstance.authentications["apiKey"] ||
+  apiInstance.authentications["api-key"];
+apiKeyAuth.apiKey = process.env.BREVO_API_KEY;
+
+// --- Fonction d'envoi d'email de bienvenue ---
+async function envoyerEmailBienvenue(inscription) {
+  const typeTexte = {
+    travailleur: "chercheur de travail",
+    employeur: "employeur",
+    "les-deux": "chercheur de travail ET employeur",
+  };
+
+  const sendSmtpEmail = {
+    sender: {
+      email: process.env.SENDER_EMAIL, // ✅ email vérifié sur Brevo
+      name: "JOBI - Plateforme de connexion professionnelle",
+    },
+    to: [{ email: inscription.email, name: inscription.name }],
+    templateId: 4, // ⚠️ remplace 4 par l’ID exact de ton template Brevo
+    params: {
+      NAME: inscription.name,
+      PHONE: inscription.phone,
+      EMAIL: inscription.email || "Non renseigné",
+      TYPE: typeTexte[inscription.type],
+      QUARTIER: inscription.quartier || "Ouagadougou",
+    },
+  };
+
+  try {
+    const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log("✅ Email envoyé via Brevo à :", inscription.name);
+    return true;
+  } catch (error) {
+    console.error("❌ Erreur envoi email Brevo :", error);
+    return false;
+  }
+}
 
 // Schéma MongoDB pour les inscriptions JOBI
 const inscriptionSchema = new mongoose.Schema(
