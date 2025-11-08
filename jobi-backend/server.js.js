@@ -95,13 +95,13 @@ const SibApiV3Sdk = require("sib-api-v3-sdk");
 require("dotenv").config();
 
 // Création d'une instance de l'API Brevo
-// const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 // Configuration de la clé API (authentification)
-let apiKey =
+const apiKeyAuth =
   apiInstance.authentications["apiKey"] ||
   apiInstance.authentications["api-key"];
-apiKey.apiKey = process.env.BREVO_API_KEY;
+apiKeyAuth.apiKey = process.env.BREVO_API_KEY;
 
 // --- Fonction d'envoi d'email de bienvenue ---
 async function envoyerEmailBienvenue(inscription) {
