@@ -34,17 +34,19 @@ app.use(express.urlencoded({ extended: true }));
 // const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 // --- Configuration de Brevo (Sendinblue) ---
+// --- Configuration de Brevo (Sendinblue) ---
 const SibApiV3Sdk = require("sib-api-v3-sdk");
 require("dotenv").config();
 
-// Création d'une instance de l'API Brevo
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+// Récupération du client global de Brevo
+const defaultClient = SibApiV3Sdk.ApiClient.instance;
 
 // Configuration de la clé API (authentification)
-const apiKeyAuth =
-  apiInstance.authentications["apiKey"] ||
-  apiInstance.authentications["api-key"];
-apiKeyAuth.apiKey = process.env.BREVO_API_KEY;
+const apiKey = defaultClient.authentications["api-key"];
+apiKey.apiKey = process.env.BREVO_API_KEY;
+
+// Création d'une instance de l'API Brevo
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 // --- Fonction d'envoi d'email de bienvenue ---
 async function envoyerEmailBienvenue(inscription) {
